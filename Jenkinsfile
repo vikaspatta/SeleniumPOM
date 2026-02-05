@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK21'
+        maven 'Maven3'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,7 +13,7 @@ pipeline {
             }
         }
 
-        stage('Verify Java & Maven') {
+        stage('Verify Tools') {
             steps {
                 bat 'java -version'
                 bat 'mvn -version'
@@ -30,12 +35,6 @@ pipeline {
         stage('Package') {
             steps {
                 bat 'mvn -B package'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploy step - add your deployment commands here'
             }
         }
     }
