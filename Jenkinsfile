@@ -2,34 +2,40 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
+        stage('Verify Java & Maven') {
+            steps {
+                bat 'java -version'
+                bat 'mvn -version'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh "mvn clean install"
+                bat 'mvn -B -DskipTests clean install'
             }
         }
 
         stage('Test') {
             steps {
-                sh "mvn test"
+                bat 'mvn -B test'
             }
         }
 
         stage('Package') {
             steps {
-                sh "mvn package"
+                bat 'mvn -B package'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploy step - configure later"
+                echo 'Deploy step - add your deployment commands here'
             }
         }
     }
